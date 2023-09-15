@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}"  />
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <header class="masthead" th:replace="page_layout/header :: header">
+    header partial will be inserted here
+  </header>
+
+  <main role="main" class="inner cover" layout:fragment="main-content">
+    <h1>This main content will be decorated by the actual page returned in the controller methods.</h1>
+  </main>
+
+  <footer class="mastfoot" th:replace="page_layout/footer :: footer ">
+      footer here will be replaced inserted here
+  </footer>
+
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script >document.querySelector('#copyright').innerHTML = 'Copyright &copy; ' + (new Date().getFullYear());</script>
+<script type="text/javascript">
+        function clearSearch() {
+            window.location.href ='/products';
+        }
+
+        function cancelAddListing(id) {
+            window.location.href ='/listing/'+id;
+        }
+    </script>
+
+
+</html>

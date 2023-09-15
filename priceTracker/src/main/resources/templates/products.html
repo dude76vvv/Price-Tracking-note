@@ -1,0 +1,112 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />-->
+</head>
+<body>
+    <div layout:fragment="main-content">
+
+        <div class="container my-2 d-flex justify-content-center">
+            <h2>Products Tracked</h2>
+
+        </div>
+
+        <div class="container">
+
+            <div th:if ="${successMessage}" th:text="${successMessage}" role="alert" class="alert alert-success text-center">
+            </div>
+
+            <div th:if ="${ErrorMessage}" th:text="${ErrorMessage}" role="alert" class="alert alert-danger text-center">
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <!--search bar here-->
+                <form th:action="@{/products}">
+                    <div class="searchB">
+                        <div class="input-group">
+                            <input name="keyword" th:value="${keyword}" size="80" type="text" class="form-control" placeholder="Type keyword...">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+<!--                <a th:href = "@{/products/new}" class = "action add btn btn-primary btn-sm mx-2"> Clear</a>-->
+                <button type="button" class="action clear btn btn-secondary btn-sm mx-2" onclick="clearSearch()">Clear</button>
+                <button type="button" class="action add btn btn-secondary btn-sm mx-2" data-toggle="modal" data-target="#exampleModal">Add</button>
+            </div>
+        </div>
+
+        <div class="container text-center my-3 table-responsive">
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price(SGD)</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "item,i: ${ProductPriceLis}">
+                    <td th:text = "${i.index+1}"></td>
+                    <td th:text = "${item.product.pName}"></td>
+                    <td>
+                        <a class="text-decoration-none" th:href ="@{/listing/{id}(id=${item.product.id})}" th:text ="${item.minPrice == item.maxPrice} ? ${'$'+ #numbers.formatDecimal(item.minPrice, 0, 'COMMA', 2, 'POINT')} : ${'$'+ #numbers.formatDecimal(item.minPrice, 0, 'COMMA', 2, 'POINT')  + ' to ' +'$'+ #numbers.formatDecimal(item.maxPrice, 0, 'COMMA', 2, 'POINT') }" >0.00
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href = "@{/products/{id}/delete(id=${item.product.id})}"
+                           class = "text-decoration-none">Delete</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--add modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/products}" th:object="${product}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="new-product" class="col-form-label">New Product:</label>
+                                <input type="text" th:field="*{pName}" class="form-control" id="new-product" required minlength="3" maxlength="50"
+                                       placeholder="Enter new Product Name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</html>
+

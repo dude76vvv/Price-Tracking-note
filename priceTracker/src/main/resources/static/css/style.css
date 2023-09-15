@@ -1,0 +1,38 @@
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+
+.action {
+    display:block;
+}
+
+.add{
+    padding:8px ;
+    margin-left: 0px!important;
+
+}
+
+.delete{
+    width: 70px !important;
+    padding:8.1px;
+    margin: 0px auto;
+}
+
+.form-control {
+    /*
+    padding-left: 2.375rem;
+    */
+}
+
+.searchB{
+    width: 100%;
+    margin: 5px auto;
+}
+
+.clear{
+    padding: 8px 8px;
+}
+
+.editDelete{
+    padding: 0px 5px;
+}

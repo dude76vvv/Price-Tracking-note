@@ -1,0 +1,54 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />-->
+</head>
+<body>
+    <div layout:fragment="main-content">
+
+        <h1>Products Tracked</h1>
+
+        <div class="container text-center my-5 table-responsive">
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">pName</th>
+                    <th scope="col">Platform</th>
+                    <th scope="col">Seller</th>
+                    <th scope="col">Price(SGD)</th>
+                    <th scope="col">LastSeen</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "item,i: ${listProduct}">
+                    <td th:text = "${i.index}"></td>
+                    <td th:text = "${item.name}"></td>
+                    <td th:text = "${item.platform}"></td>
+                    <td th:text = "${item.seller}"></td>
+                    <td th:text = "${'$'+ item.price}"></td>
+                    <td th:text = "${#dates.format(item.last_seen,'dd-MM-yyyy')}"></td>
+                    <td th:text = "${item.comment}"></td>
+                    <td>
+                        <a th:href = "@{/products/edit/{id}(id=${item.id})}"
+                           class = "btn btn-primary m-1 action">Update</a>
+                        <a th:href = "@{/products/{id}(id=${item.id})}"
+                           class = "btn btn-danger m-1 action">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>
+

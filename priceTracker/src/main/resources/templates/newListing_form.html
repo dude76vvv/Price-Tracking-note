@@ -1,0 +1,46 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />-->
+</head>
+<body>
+    <div layout:fragment="main-content">
+
+        <div class="container my-5">
+
+            <h2 th:text="${'Add Listing-'+ {currProduct.pName}}" style="text-align:center;">Product Name</h2>
+
+            <form th:action="@{/listing/{id}/add(id=${currProduct.id})}" th:object = "${listingDto}" method="POST">
+                <div class="form-group">
+                    <label for="InputPlatform">Platform</label>
+                    <input th:field = "*{platform}" type="text" class="form-control" id="InputPlatform" placeholder="Enter Platform" minlength="3" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="InputSeller">Seller</label>
+                    <input th:field = "*{seller}" type="text" class="form-control" id="InputSeller" placeholder="Enter Seller" minlength="3" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="InputPrice">Price(SGD)</label>
+                    <input th:field = "*{price}" type="number" step="0.10" min="0.00" max="999.99" class="form-control" value="50.00" id="InputPrice" required>
+                </div>
+
+                <button type="button" class="btn btn-secondary" th:attr="onclick=|cancelAddListing('${currProduct.id}')|">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</body>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</html>
+

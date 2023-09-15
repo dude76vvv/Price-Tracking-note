@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />-->
+</head>
+<body>
+    <div layout:fragment="main-content">
+
+        <div class="container">
+            <h2 th:text="${productName}">Product Name</h2>
+            <h3 th:text="${'Min Price: $'  + #numbers.formatDecimal(productMinMax.min, 0, 'COMMA', 2, 'POINT') + ' SGD' }">0.00</h3>
+            <h3 th:text="${'Max Price: $'  + #numbers.formatDecimal(productMinMax.max, 0, 'COMMA', 2, 'POINT') + ' SGD'}">0.00</h3>
+
+            <a th:href = "@{/listing/{id}/add(id=${productId})}"
+               class = "btn btn-secondary">Add New Listing</a>
+
+        </div>
+
+
+        <div class="container text-center my-3 table-responsive">
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+
+                    <!-- sorting based on the route                    -->
+                    <th scope="col">
+                        <a class = "text-decoration-none" th:href="@{/listing/{id}?sortField=platform&sortDir={dir}(id=${productId},dir=${reverseSortDir})}">Platform</a>
+                    </th>
+                    <th scope="col">
+                            <a class = "text-decoration-none" th:href="@{/listing/{id}?sortField=seller&sortDir={dir}(id=${productId},dir=${reverseSortDir})}">Seller</a>
+
+                    </th>
+                    <th scope="col">
+                        <a class = "text-decoration-none" th:href="@{/listing/{id}?sortField=price&sortDir={dir}(id=${productId},dir=${reverseSortDir})}">Price</a>
+
+                    </th>
+                    <th scope="col">
+                        <a class = "text-decoration-none"  th:href="@{/listing/{id}?sortField=lastSeen&sortDir={dir}(id=${productId},dir=${reverseSortDir})}">Last Recorded</a>
+
+                    </th>
+                    <th scope="col">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "item,i: ${productListing}">
+                    <td th:text = "${item.platform}"></td>
+                    <td th:text = "${item.seller}"></td>
+                    <td th:text ="${'$'+ #numbers.formatDecimal(item.price, 0, 'COMMA', 2, 'POINT')}"
+                    ></td>
+                    <td th:text = "${#dates.format(item.lastSeen,'dd-MM-yyyy')}"></td>
+                    <td>
+                        <a th:href = "@{/listing/{id}/edit?listingId={listingId}(id=${productId},listingId=${item.id})}" class = "text-decoration-none editDelete">Edit</a>
+                        <a th:href = "@{/listing/{id}/delete?listingId={listingId}(id=${productId},listingId=${item.id})}" class = "text-decoration-none editDelete">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</html>
+
